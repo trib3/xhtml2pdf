@@ -263,8 +263,7 @@ def _putFragLine(cur_x, tx, line):
                 pillow_img = cbDefn.image.getImage()
                 tc = pillow_img.getTransparent()
                 if tc:
-                    tc = list(tc)
-                    img_mask = (tc[0], tc[0], tc[1], tc[1], tc[2], tc[2])
+                    img_mask = (0, 0, 0, 0, 0 ,0)
                 else:
                     img_mask = None
                 tx._canvas.drawImage(pillow_img, cur_x_s, cur_y + iy0, w, h, mask=img_mask)
