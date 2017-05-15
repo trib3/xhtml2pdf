@@ -607,7 +607,7 @@ class pisaFileObject:
 
             else:
 
-                log.debug("Unrecognized scheme, assuming local file path")
+                log.info("Unrecognized scheme, assuming local file path for %s" % uri)
 
                 # Local data
                 if basepath:
@@ -618,10 +618,7 @@ class pisaFileObject:
                     self.local = uri
                 
                     self.setMimeTypeByName(uri)
-                    if self.mimetype.startswith('text'):
-                        self.file = open(uri, "r") #removed bytes... lets hope it goes ok :/
-                    else:
-                        self.file = open(uri, "rb") #removed bytes... lets hope it goes ok :/
+                    self.file = open(uri, "rb")
 
     def getFile(self):
         if self.file is not None:
