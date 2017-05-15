@@ -259,7 +259,15 @@ def _putFragLine(cur_x, tx, line):
                     txfs = xs.style.fontSize
                 iy0, iy1 = imgVRange(h, cbDefn.valign, txfs)
                 cur_x_s = cur_x + nSpaces * ws
-                tx._canvas.drawImage(cbDefn.image.getImage(), cur_x_s, cur_y + iy0, w, h, mask=None)
+
+                pillow_img = cbDefn.image.getImage()
+                tc = pillow_img.getTransparent()
+                if tc:
+                    tc = list(tc)
+                    img_mask = (tc[0], tc[0], tc[1], tc[1], tc[2], tc[2])
+                else:
+                    img_mask = None
+                tx._canvas.drawImage(pillow_img, cur_x_s, cur_y + iy0, w, h, mask=img_mask)
                 cur_x += w
                 cur_x_s += w
                 setXPos(tx, cur_x_s - tx._x0)
