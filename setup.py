@@ -37,7 +37,7 @@ setup(
     maintainer_email="use-github@doit.com",
     url="http://github.com/xhtml2pdf/xhtml2pdf",
     keywords="PDF, HTML, XHTML, XML, CSS",
-    install_requires=["html5lib==1.0b10", "httplib2", "pyPdf2", "Pillow", "reportlab>=3.0", "six"],
+    install_requires=["html5lib==1.0b10", "httplib2", "pyPdf2", "Pillow", "reportlab>=3.0, <=3.6.6", "six"],
     setup_requires=["nose>=1.0"],
     include_package_data=True,
     packages=find_packages(exclude=["tests", "tests.*"]),
