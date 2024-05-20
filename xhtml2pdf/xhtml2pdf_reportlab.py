@@ -15,9 +15,10 @@
 # limitations under the License.
 
 from hashlib import md5
+from html import escape as html_escape
 from reportlab.lib.enums import TA_RIGHT
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.utils import flatten, open_for_read, getStringIO, \
+from reportlab.lib.utils import flatten, open_for_read, \
     LazyImageReader, haveImages
 from reportlab.platypus.doctemplate import BaseDocTemplate, PageTemplate, IndexingFlowable
 from reportlab.platypus.flowables import Flowable, CondPageBreak, \
@@ -29,6 +30,7 @@ from xhtml2pdf.util import getUID, getBorderStyle
 
 import six
 import sys
+from io import StringIO
 
 import cgi
 import copy
@@ -121,7 +123,7 @@ class PmlBaseDoc(BaseDocTemplate):
         if getattr(flowable, "outline", False):
             self.notify('TOCEntry', (
                 flowable.outlineLevel,
-                cgi.escape(copy.deepcopy(flowable.text), 1),
+                html_escape(copy.deepcopy(flowable.text), 1),
                 self.page))
 
     def handle_nextPageTemplate(self, pt):
@@ -338,7 +340,7 @@ class PmlImageReader(object):  # TODO We need a factory here, returning either a
                             register_reset(self._cache.clear)
 
                         data = self._cache.setdefault(md5(data).digest(), data)
-                    self.fp = getStringIO(data)
+                    self.fp = StringIO(data)
                 elif imageReaderFlags == - 1 and isinstance(fileName, six.text_type):
                     #try Ralf Schmitt's re-opening technique of avoiding too many open files
                     self.fp.close()
